@@ -24,6 +24,10 @@ async function editContactUs(req,res) {
       let data = await ContactUs.findOne({_id:req.params._id})
       if(data){
         data.active = !data.active
+
+
+       const serverUrl = process.env.SERVER.replace(/\/$/, "");
+
         
         mailer.sendMail({
           from: process.env.MAIL_SENDER,
@@ -33,7 +37,7 @@ async function editContactUs(req,res) {
               Hello Guardians,
               Your Query Has Been Resolved,
               If you still have some issues please contact us again
-              ${process.env.SERVER}/contact
+              ${serverUrl}/contact
           `
       }, (error) => {
           if (error)
