@@ -8,15 +8,17 @@ const Router = require("./routes/index")
 
 const app = express()
 
-var sess = {
+app.set('trust proxy', 1); // Trust proxy for Railway
+app.use(session({
     secret: process.env.SESSION_SECRET_KEY,
-    cookie: {}
-}
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
-}
-app.use(session(sess))
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        httpOnly: true,
+        secure: app.get('env') === 'production'
+    }
+}));
 
 require("./db_connect")
 require("./helpers")
