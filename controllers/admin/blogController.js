@@ -50,7 +50,7 @@ async function storeBlog(req,res){
                 Hello Guardians,
                 Please Checkout Our Latest Pubhlished Blog
                 Click on The Link Below
-                ${process.env.SERVER}/blog/${data._id}
+                ${process.env.SERVER}/blog/${encodeURIComponent(data._id)}
             `
         },(error)=>{
             if(error)
