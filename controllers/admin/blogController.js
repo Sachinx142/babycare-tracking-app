@@ -41,6 +41,8 @@ async function storeBlog(req,res){
 
        const newsletter = await Newsletter.find();
 
+       const serverUrl = process.env.SERVER.replace(/\/$/, "");
+
        newsletter.forEach(x=>{
         mailer.sendMail({
             from:process.env.MAIL_SENDER,
@@ -50,7 +52,7 @@ async function storeBlog(req,res){
                 Hello Guardians,
                 Please Checkout Our Latest Pubhlished Blog
                 Click on The Link Below
-                ${process.env.SERVER}/blog/${encodeURIComponent(data._id)}
+                ${serverUrl}/blog/${data._id}
             `
         },(error)=>{
             if(error)
